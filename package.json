@@ -12,13 +12,23 @@
     "zip": "wxt zip",
     "zip:firefox": "wxt zip -b firefox",
     "compile": "tsc --noEmit",
+    "prepare": "husky",
     "postinstall": "wxt prepare",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint . --ext .ts,.tsx --max-warnings=0",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
-    "check": "npm run format:check && npm run lint",
-    "check:fix": "npm run format && npm run lint:fix"
+    "check": "pnpm run format:check && pnpm run lint",
+    "check:fix": "pnpm run format && pnpm run lint:fix"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,mdx,css,scss,html,yaml,yml}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "react": "^19.1.0",
@@ -35,6 +45,8 @@
     "eslint-plugin-prettier": "^5.4.1",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.0",
     "prettier": "^3.5.3",
     "typescript": "^5.8.3",
     "wxt": "^0.20.6"
