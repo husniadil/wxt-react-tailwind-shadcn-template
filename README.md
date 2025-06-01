@@ -87,7 +87,8 @@ A modern, opinionated template for building browser extensions with WXT, React, 
 ```
 .
 ├── public/                 # Static assets
-│   └── icon/               # Extension icons in various sizes
+│   ├── icon/               # Extension icons in various sizes
+├── screenshots/            # Extension screenshots
 ├── src/
 │   ├── assets/             # Static assets used in the application
 │   ├── components/         # Reusable React components
@@ -99,7 +100,8 @@ A modern, opinionated template for building browser extensions with WXT, React, 
 │   │   ├── content/        # Content scripts
 │   │   └── popup/          # Popup UI
 │   ├── lib/                # Utility functions
-│   └── styles/             # Global styles and CSS
+│   ├── styles/             # Global styles and CSS
+│   └── types/              # TypeScript type definitions
 ├── .eslint.config.js       # ESLint configuration
 ├── components.json         # shadcn/ui configuration
 ├── package.json            # Project manifest
