@@ -12,6 +12,20 @@ A modern, opinionated template for building browser extensions with WXT, React, 
 - 🔥 Hot reloading for development
 - 📦 Optimized production builds
 
+## 📸 Screenshots
+
+### Content UI
+
+<!-- Add content screenshot here -->
+
+![Content UI](./screenshots/content.png)
+
+### Popup UI
+
+<!-- Add popup screenshot here -->
+
+![Popup UI](./screenshots/popup.png)
+
 ## 🛠️ Getting Started
 
 1. **Clone the repository (or `Use this template`)**
