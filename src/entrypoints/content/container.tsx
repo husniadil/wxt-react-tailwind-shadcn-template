@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Context } from "@/components/context";
+import { Context } from "@/context/context";
 import { ThemeProvider } from "@/components/theme-provider";
 import App from "@/components/app";
 
