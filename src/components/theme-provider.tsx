@@ -1,4 +1,6 @@
-import { APP_NAME } from "@/constants";
+"use client";
+
+import { APP_NAME, DEFAULT_THEME, THEME_STORAGE_KEY } from "@/constants";
 import { createContext, useContext, useEffect, useState } from "react";
 
 type Theme = "dark" | "light" | "system";
@@ -15,7 +17,7 @@ type ThemeProviderState = {
 };
 
 const initialState: ThemeProviderState = {
-  theme: "system",
+  theme: DEFAULT_THEME,
   setTheme: () => null,
 };
 
@@ -23,8 +25,8 @@ const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 
 export function ThemeProvider({
   children,
-  defaultTheme = "system",
-  storageKey = "vite-ui-theme",
+  defaultTheme = DEFAULT_THEME,
+  storageKey = THEME_STORAGE_KEY,
   ...props
 }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>(

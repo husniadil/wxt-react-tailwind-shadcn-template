@@ -8,7 +8,14 @@ import { useState } from "react";
 import { Rnd } from "react-rnd";
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
 import { CloseButton } from "./close-button";
-import { APP_NAME } from "@/constants";
+import {
+  APP_NAME,
+  SHOW_CLOSE_BUTTON,
+  SHOW_THEME_TOGGLE,
+  WINDOW_HEIGHT,
+  WINDOW_WIDTH,
+} from "@/constants";
+import { cn } from "@/lib/utils";
 
 interface AppProps {
   trigger: "popup" | "content";
@@ -18,7 +25,6 @@ interface ContentWrapperProps {
   isVisible: boolean;
   children: React.ReactNode;
   onClose?: () => void;
-  showCloseButton?: boolean;
 }
 
 const Content = () => {
@@ -80,19 +86,19 @@ const Content = () => {
   );
 };
 
-const ContentWrapper = ({
-  isVisible,
-  children,
-  onClose,
-  showCloseButton = false,
-}: ContentWrapperProps) => {
+const ContentWrapper = ({ isVisible, children, onClose }: ContentWrapperProps) => {
   return (
     <div
-      className={`${isVisible ? "block" : "hidden"} w-full h-full min-w-[300px] min-h-[400px] bg-white dark:bg-black p-4 text-center flex flex-col justify-between rounded-lg relative`}
+      className={cn(
+        isVisible ? "block" : "hidden",
+        `min-w-[${WINDOW_WIDTH}px]`,
+        `min-h-[${WINDOW_HEIGHT}px]`,
+        "w-full h-full bg-white dark:bg-black p-4 text-center flex flex-col justify-between rounded-lg relative"
+      )}
     >
       <div className="absolute top-2 right-2 flex items-center gap-2 z-10">
-        <ThemeToggle />
-        {showCloseButton && onClose && <CloseButton onClick={onClose} />}
+        {SHOW_THEME_TOGGLE && <ThemeToggle />}
+        {SHOW_CLOSE_BUTTON && onClose && <CloseButton onClick={onClose} />}
       </div>
       {children}
     </div>
@@ -106,45 +112,47 @@ function App({ trigger }: AppProps) {
     setIsVisible((prev) => !prev);
   };
 
-  return (
-    <>
-      {trigger === "content" ? (
-        <>
-          <FloatingActionButton onClick={toggleVisibility} />
-          {isVisible && (
-            <Rnd
-              default={{
-                x: -300,
-                y: -400,
-                width: 300,
-                height: 400,
-              }}
-              minWidth={300}
-              minHeight={400}
-              enableResizing={{
-                top: true,
-                right: true,
-                bottom: true,
-                left: true,
-                topRight: true,
-                bottomRight: true,
-                bottomLeft: true,
-                topLeft: true,
-              }}
-            >
-              <ContentWrapper isVisible={true} onClose={toggleVisibility} showCloseButton={true}>
-                <Content />
-              </ContentWrapper>
-            </Rnd>
-          )}
-        </>
-      ) : (
-        <ContentWrapper isVisible={isVisible}>
-          <Content />
-        </ContentWrapper>
-      )}
-    </>
-  );
+  if (trigger === "popup") {
+    return (
+      <ContentWrapper isVisible={isVisible}>
+        <Content />
+      </ContentWrapper>
+    );
+  }
+
+  if (trigger === "content") {
+    return (
+      <>
+        <FloatingActionButton onClick={toggleVisibility} />
+        {isVisible && (
+          <Rnd
+            default={{
+              x: -WINDOW_WIDTH,
+              y: -WINDOW_HEIGHT,
+              width: WINDOW_WIDTH,
+              height: WINDOW_HEIGHT,
+            }}
+            minWidth={WINDOW_WIDTH}
+            minHeight={WINDOW_HEIGHT}
+            enableResizing={{
+              top: true,
+              right: true,
+              bottom: true,
+              left: true,
+              topRight: true,
+              bottomRight: true,
+              bottomLeft: true,
+              topLeft: true,
+            }}
+          >
+            <ContentWrapper isVisible={true} onClose={toggleVisibility}>
+              <Content />
+            </ContentWrapper>
+          </Rnd>
+        )}
+      </>
+    );
+  }
 }
 
 export default App;

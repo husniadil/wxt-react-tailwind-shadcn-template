@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Context } from "@/context/context";
 import { ThemeProvider } from "@/components/theme-provider";
 import App from "@/components/app";
+import { DEFAULT_THEME, THEME_STORAGE_KEY } from "@/constants";
 
 export const Container = () => {
   const [container, setContainer] = useState<HTMLElement | null>(null);
@@ -9,7 +10,7 @@ export const Container = () => {
   return (
     <React.StrictMode>
       <Context.Provider value={container}>
-        <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+        <ThemeProvider defaultTheme={DEFAULT_THEME} storageKey={THEME_STORAGE_KEY}>
           <div
             ref={setContainer}
             id="content-wrapper"
