@@ -38,8 +38,6 @@ export function ThemeProvider({
 
     if (!root) return;
 
-    console.log(root);
-
     root.classList.remove("light", "dark");
 
     if (theme === "system") {
