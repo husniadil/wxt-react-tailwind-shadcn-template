@@ -9,6 +9,11 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
 
+  // Tailwind CSS Configuration
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+
   // Prettier Configuration
   "prettier.semi": true,
   "prettier.singleQuote": false,
