@@ -13,8 +13,12 @@ const ContentRoot = () => {
     <React.StrictMode>
       <PortalContext.Provider value={portalContainer}>
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-          <div ref={setPortalContainer} id="content-wrapper">
-            <App />
+          <div
+            ref={setPortalContainer}
+            id="content-wrapper"
+            className="fixed bottom-4 right-4 flex flex-row-reverse items-end gap-4 z-999"
+          >
+            <App trigger="content" />
           </div>
         </ThemeProvider>
       </PortalContext.Provider>
