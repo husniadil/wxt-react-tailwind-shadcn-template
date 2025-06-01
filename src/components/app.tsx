@@ -13,17 +13,29 @@ function App() {
       <div className="w-[300px] max-w-[1280px] mx-auto p-8 text-center items-center flex flex-col gap-4 bg-white dark:bg-black">
         <ThemeToggle />
         <div className="flex gap-4">
-          <a href="https://wxt.dev" target="_blank" rel="noreferrer">
+          <a
+            href="https://wxt.dev"
+            target="_blank"
+            rel="noreferrer"
+            className="relative group block rounded-full"
+          >
+            <div className="absolute inset-0 rounded-full transition-all duration-300 group-hover:bg-[#54bc4a]/30 dark:group-hover:bg-[#54bc4a]/40 blur-md"></div>
             <img
               src={wxtLogo}
-              className="h-24 p-6 inline-block transition-[filter] duration-300 hover:drop-shadow-[0_0_2em_#54bc4ae0] dark:hover:drop-shadow-[0_0_2em_#54bc4ae0]"
+              className="h-24 p-6 inline-block relative transition-all duration-300"
               alt="WXT logo"
             />
           </a>
-          <a href="https://react.dev" target="_blank" rel="noreferrer" className="group">
+          <a
+            href="https://react.dev"
+            target="_blank"
+            rel="noreferrer"
+            className="group relative block rounded-full"
+          >
+            <div className="absolute inset-0 rounded-full transition-all duration-300 group-hover:bg-[#61dafb]/30 dark:group-hover:bg-[#61dafb]/40 blur-md"></div>
             <img
               src={reactLogo}
-              className="h-24 p-6 inline-block transition-[filter] duration-300 hover:drop-shadow-[0_0_2em_#61dafbaa] group-first-of-type:animate-[spin_20s_linear_infinite] dark:hover:drop-shadow-[0_0_2em_#61dafbaa]"
+              className="h-24 p-6 inline-block relative transition-all duration-300 group-[.group]:animate-[spin_20s_linear_infinite]"
               alt="React logo"
             />
           </a>
@@ -33,7 +45,7 @@ function App() {
           <Button onClick={() => setCount((count) => count + 1)}>count is {count}</Button>
           <p className="mt-4 text-gray-500 dark:text-gray-400">
             Edit{" "}
-            <code className="font-mono bg-gray-100 dark:bg-gray-800 px-1 rounded">src/App.tsx</code>{" "}
+            <code className="font-mono bg-gray-100 dark:bg-gray-800 px-1 rounded">src/app.tsx</code>{" "}
             and save to test HMR
           </p>
         </div>
