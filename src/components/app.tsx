@@ -91,10 +91,9 @@ const ContentWrapper = ({ isVisible, children, onClose }: ContentWrapperProps) =
     <div
       className={cn(
         isVisible ? "block" : "hidden",
-        `min-w-[${WINDOW_WIDTH}px]`,
-        `min-h-[${WINDOW_HEIGHT}px]`,
-        "w-full h-full bg-white dark:bg-black p-4 text-center flex flex-col justify-between rounded-lg relative"
+        `w-full h-full bg-white dark:bg-black p-4 text-center flex flex-col justify-between rounded-lg relative`
       )}
+      style={{ minWidth: WINDOW_WIDTH, minHeight: WINDOW_HEIGHT }}
     >
       <div className="absolute top-2 right-2 flex items-center gap-2 z-10">
         {SHOW_THEME_TOGGLE && <ThemeToggle />}
