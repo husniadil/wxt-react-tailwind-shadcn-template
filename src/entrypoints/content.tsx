@@ -1,5 +1,6 @@
 import App from "@/components/app";
 import { ThemeProvider } from "@/components/theme-provider";
+import { APP_NAME } from "@/constants";
 import "@/styles/globals.css";
 import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
@@ -12,7 +13,7 @@ const ContentRoot = () => {
   return (
     <React.StrictMode>
       <PortalContext.Provider value={portalContainer}>
-        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
           <div
             ref={setPortalContainer}
             id="content-wrapper"
@@ -32,7 +33,7 @@ export default defineContentScript({
 
   async main(ctx) {
     const ui = await createShadowRootUi(ctx, {
-      name: "wxt-react-tailwind-shadcn-template",
+      name: APP_NAME,
       position: "inline",
       anchor: "body",
       append: "first",

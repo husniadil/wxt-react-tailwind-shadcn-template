@@ -1,3 +1,4 @@
+import { APP_NAME } from "@/constants";
 import { createContext, useContext, useEffect, useState } from "react";
 
 type Theme = "dark" | "light" | "system";
@@ -31,7 +32,7 @@ export function ThemeProvider({
   );
 
   useEffect(() => {
-    const host = document.querySelector("wxt-react-tailwind-shadcn-template");
+    const host = document.querySelector(APP_NAME);
     const shadowRoot = host?.shadowRoot;
     const root = shadowRoot?.querySelector("html") || window.document.documentElement;
 
