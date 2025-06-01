@@ -31,7 +31,13 @@ export function ThemeProvider({
   );
 
   useEffect(() => {
-    const root = window.document.documentElement;
+    const host = document.querySelector("wxt-react-tailwind-shadcn-template");
+    const shadowRoot = host?.shadowRoot;
+    const root = shadowRoot?.querySelector("html") || window.document.documentElement;
+
+    if (!root) return;
+
+    console.log(root);
 
     root.classList.remove("light", "dark");
 
