@@ -1,14 +1,13 @@
 "use client";
 
-import { APP_NAME, DEFAULT_THEME, THEME_STORAGE_KEY } from "@/constants";
+import { APP_NAME } from "@/constants";
+import { THEME_DEFAULT } from "@/types/theme";
 import { createContext, useContext, useEffect, useState } from "react";
-
-type Theme = "dark" | "light" | "system";
+import { store } from "@/lib/storage";
+import { Theme } from "@/types/theme";
 
 type ThemeProviderProps = {
   children: React.ReactNode;
-  defaultTheme?: Theme;
-  storageKey?: string;
 };
 
 type ThemeProviderState = {
@@ -17,21 +16,20 @@ type ThemeProviderState = {
 };
 
 const initialState: ThemeProviderState = {
-  theme: DEFAULT_THEME,
+  theme: THEME_DEFAULT,
   setTheme: () => null,
 };
 
 const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 
-export function ThemeProvider({
-  children,
-  defaultTheme = DEFAULT_THEME,
-  storageKey = THEME_STORAGE_KEY,
-  ...props
-}: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
-  );
+export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
+  const [theme, setTheme] = useState<Theme>(() => THEME_DEFAULT);
+
+  useEffect(() => {
+    store.theme.getValue().then(setTheme);
+    const unwatch = store.theme.watch(setTheme);
+    return () => unwatch();
+  }, [theme]);
 
   useEffect(() => {
     const host = document.querySelector(APP_NAME);
@@ -57,8 +55,7 @@ export function ThemeProvider({
   const value = {
     theme,
     setTheme: (theme: Theme) => {
-      localStorage.setItem(storageKey, theme);
-      setTheme(theme);
+      store.theme.setValue(theme);
     },
   };
 
