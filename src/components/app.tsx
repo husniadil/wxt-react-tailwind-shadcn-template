@@ -5,25 +5,25 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import "@/styles/globals.css";
 import { useState } from "react";
+import { Rnd } from "react-rnd";
 
 interface AppProps {
   trigger: "popup" | "content";
 }
 
-function App({ trigger }: AppProps) {
-  const [count, setCount] = useState(0);
-  const [isVisible, setIsVisible] = useState(trigger === "popup");
+interface ContentProps {
+  isVisible: boolean;
+}
 
-  const toggleVisibility = () => {
-    setIsVisible((prev) => !prev);
-  };
+const Content = ({ isVisible }: ContentProps) => {
+  const [count, setCount] = useState(0);
 
   return (
-    <>
-      {trigger === "content" && <FloatingActionButton onClick={toggleVisibility} />}
-      <div
-        className={`${isVisible ? "block" : "hidden"} w-[300px] bg-white dark:bg-black p-4 text-center items-center flex flex-col gap-2 rounded-lg`}
-      >
+    <div
+      className={`${isVisible ? "block" : "hidden"} w-full h-full min-w-[300px] min-h-[350px] bg-white dark:bg-black p-4 text-center flex flex-col justify-between rounded-lg`}
+    >
+      {/* Top content area */}
+      <div className="flex flex-col items-center gap-2">
         <ThemeToggle />
         <div className="flex gap-2">
           <a
@@ -58,16 +58,62 @@ function App({ trigger }: AppProps) {
           <Button onClick={() => setCount((count) => count + 1)} size="sm">
             count is {count}
           </Button>
-          <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-            Edit{" "}
-            <code className="font-mono bg-gray-100 dark:bg-gray-800 px-1 rounded">src/app.tsx</code>{" "}
-            and save to test HMR
-          </p>
         </div>
+      </div>
+
+      {/* Bottom content area - always at bottom */}
+      <div className="mt-auto flex flex-col items-center">
+        <p className="text-xs text-gray-500 dark:text-gray-400">
+          Edit{" "}
+          <code className="font-mono bg-gray-100 dark:bg-gray-800 px-1 rounded">src/app.tsx</code>{" "}
+          and save to test HMR
+        </p>
         <p className="text-xs text-gray-500 dark:text-gray-400">
           Click on the WXT and React logos to learn more
         </p>
       </div>
+    </div>
+  );
+};
+
+function App({ trigger }: AppProps) {
+  const [isVisible, setIsVisible] = useState(trigger === "popup");
+
+  const toggleVisibility = () => {
+    setIsVisible((prev) => !prev);
+  };
+
+  return (
+    <>
+      {trigger === "content" ? (
+        <>
+          <FloatingActionButton onClick={toggleVisibility} />
+          <Rnd
+            default={{
+              x: -300,
+              y: -350,
+              width: 300,
+              height: 350,
+            }}
+            minWidth={300}
+            minHeight={350}
+            enableResizing={{
+              top: true,
+              right: true,
+              bottom: true,
+              left: true,
+              topRight: true,
+              bottomRight: true,
+              bottomLeft: true,
+              topLeft: true,
+            }}
+          >
+            <Content isVisible={isVisible} />
+          </Rnd>
+        </>
+      ) : (
+        <Content isVisible={isVisible} />
+      )}
     </>
   );
 }
