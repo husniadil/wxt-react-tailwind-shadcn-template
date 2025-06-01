@@ -1,24 +1,24 @@
 import React, { useState } from "react";
-import { PortalContext } from "./context";
+import { Context } from "@/components/context";
 import { ThemeProvider } from "@/components/theme-provider";
 import App from "@/components/app";
 
-export const Root = () => {
-  const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(null);
+export const Container = () => {
+  const [container, setContainer] = useState<HTMLElement | null>(null);
 
   return (
     <React.StrictMode>
-      <PortalContext.Provider value={portalContainer}>
+      <Context.Provider value={container}>
         <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
           <div
-            ref={setPortalContainer}
+            ref={setContainer}
             id="content-wrapper"
-            className="fixed bottom-4 right-4 flex flex-row-reverse items-end gap-4 z-999"
+            className="fixed bottom-4 right-4 flex flex-row-reverse items-end gap-4 z-50"
           >
             <App trigger="content" />
           </div>
         </ThemeProvider>
-      </PortalContext.Provider>
+      </Context.Provider>
     </React.StrictMode>
   );
 };

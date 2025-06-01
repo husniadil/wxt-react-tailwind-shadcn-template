@@ -1,7 +1,7 @@
 import { APP_NAME } from "@/constants";
 import "@/styles/globals.css";
 import ReactDOM from "react-dom/client";
-import { Root } from "./root";
+import { Container } from "./container";
 
 export default defineContentScript({
   matches: ["<all_urls>"],
@@ -19,7 +19,7 @@ export default defineContentScript({
         container.append(app);
 
         const root = ReactDOM.createRoot(app);
-        root.render(<Root />);
+        root.render(<Container />);
         return root;
       },
       onRemove: (root) => {
