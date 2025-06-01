@@ -6,25 +6,26 @@ import { Button } from "@/components/ui/button";
 import "@/styles/globals.css";
 import { useState } from "react";
 import { Rnd } from "react-rnd";
+import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
 
 interface AppProps {
   trigger: "popup" | "content";
 }
 
-interface ContentProps {
+interface ContentWrapperProps {
   isVisible: boolean;
+  children: React.ReactNode;
 }
 
-const Content = ({ isVisible }: ContentProps) => {
+const Content = () => {
   const [count, setCount] = useState(0);
 
   return (
-    <div
-      className={`${isVisible ? "block" : "hidden"} w-full h-full min-w-[300px] min-h-[350px] bg-white dark:bg-black p-4 text-center flex flex-col justify-between rounded-lg`}
-    >
-      {/* Top content area */}
-      <div className="flex flex-col items-center gap-2">
+    <Card className="w-full h-full border-0 shadow-none">
+      <CardHeader className="flex flex-col items-center">
         <ThemeToggle />
+      </CardHeader>
+      <CardContent className="flex flex-col items-center justify-center">
         <div className="flex gap-2">
           <a
             href="https://wxt.dev"
@@ -59,10 +60,8 @@ const Content = ({ isVisible }: ContentProps) => {
             count is {count}
           </Button>
         </div>
-      </div>
-
-      {/* Bottom content area - always at bottom */}
-      <div className="mt-auto flex flex-col items-center">
+      </CardContent>
+      <CardFooter className="mt-auto flex flex-col items-center">
         <p className="text-xs text-gray-500 dark:text-gray-400">
           Edit{" "}
           <code className="font-mono bg-gray-100 dark:bg-gray-800 px-1 rounded">src/app.tsx</code>{" "}
@@ -71,7 +70,17 @@ const Content = ({ isVisible }: ContentProps) => {
         <p className="text-xs text-gray-500 dark:text-gray-400">
           Click on the WXT and React logos to learn more
         </p>
-      </div>
+      </CardFooter>
+    </Card>
+  );
+};
+
+const ContentWrapper = ({ isVisible, children }: ContentWrapperProps) => {
+  return (
+    <div
+      className={`${isVisible ? "block" : "hidden"} w-full h-full min-w-[300px] min-h-[400px] bg-white dark:bg-black p-4 text-center flex flex-col justify-between rounded-lg`}
+    >
+      {children}
     </div>
   );
 };
@@ -91,12 +100,12 @@ function App({ trigger }: AppProps) {
           <Rnd
             default={{
               x: -300,
-              y: -350,
+              y: -400,
               width: 300,
-              height: 350,
+              height: 400,
             }}
             minWidth={300}
-            minHeight={350}
+            minHeight={400}
             enableResizing={{
               top: true,
               right: true,
@@ -108,11 +117,15 @@ function App({ trigger }: AppProps) {
               topLeft: true,
             }}
           >
-            <Content isVisible={isVisible} />
+            <ContentWrapper isVisible={isVisible}>
+              <Content />
+            </ContentWrapper>
           </Rnd>
         </>
       ) : (
-        <Content isVisible={isVisible} />
+        <ContentWrapper isVisible={isVisible}>
+          <Content />
+        </ContentWrapper>
       )}
     </>
   );
