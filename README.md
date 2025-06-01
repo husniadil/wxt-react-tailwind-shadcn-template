@@ -121,3 +121,4 @@ MIT
 - [React](https://react.dev/)
 - [shadcn/ui](https://ui.shadcn.com/)
 - [Tailwind CSS](https://tailwindcss.com/)
+- [Building Modern Cross-Browser Extensions](https://aabidk.dev/blog/building-modern-cross-web-extensions-introduction/) by [Aabid K.](https://github.com/aabidk20/command-palette)
