@@ -7,6 +7,8 @@ import "@/styles/globals.css";
 import { useState } from "react";
 import { Rnd } from "react-rnd";
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
+import { CloseButton } from "./close-button";
+import { APP_NAME } from "@/constants";
 
 interface AppProps {
   trigger: "popup" | "content";
@@ -15,6 +17,8 @@ interface AppProps {
 interface ContentWrapperProps {
   isVisible: boolean;
   children: React.ReactNode;
+  onClose?: () => void;
+  showCloseButton?: boolean;
 }
 
 const Content = () => {
@@ -22,8 +26,10 @@ const Content = () => {
 
   return (
     <Card className="w-full h-full border-0 shadow-none">
-      <CardHeader className="flex flex-col items-center">
-        <ThemeToggle />
+      <CardHeader className="flex flex-col items-center justify-center">
+        <div className="flex gap-2">
+          <h1 className="text-lg font-bold text-black dark:text-white">{APP_NAME}</h1>
+        </div>
       </CardHeader>
       <CardContent className="flex flex-col items-center justify-center">
         <div className="flex gap-2">
@@ -54,7 +60,6 @@ const Content = () => {
             />
           </a>
         </div>
-        <h1 className="text-lg font-bold text-black dark:text-white">WXT + React</h1>
         <div className="py-2">
           <Button onClick={() => setCount((count) => count + 1)} size="sm">
             count is {count}
@@ -75,11 +80,20 @@ const Content = () => {
   );
 };
 
-const ContentWrapper = ({ isVisible, children }: ContentWrapperProps) => {
+const ContentWrapper = ({
+  isVisible,
+  children,
+  onClose,
+  showCloseButton = false,
+}: ContentWrapperProps) => {
   return (
     <div
-      className={`${isVisible ? "block" : "hidden"} w-full h-full min-w-[300px] min-h-[400px] bg-white dark:bg-black p-4 text-center flex flex-col justify-between rounded-lg`}
+      className={`${isVisible ? "block" : "hidden"} w-full h-full min-w-[300px] min-h-[400px] bg-white dark:bg-black p-4 text-center flex flex-col justify-between rounded-lg relative`}
     >
+      <div className="absolute top-2 right-2 flex items-center gap-2 z-10">
+        <ThemeToggle />
+        {showCloseButton && onClose && <CloseButton onClick={onClose} />}
+      </div>
       {children}
     </div>
   );
@@ -97,30 +111,32 @@ function App({ trigger }: AppProps) {
       {trigger === "content" ? (
         <>
           <FloatingActionButton onClick={toggleVisibility} />
-          <Rnd
-            default={{
-              x: -300,
-              y: -400,
-              width: 300,
-              height: 400,
-            }}
-            minWidth={300}
-            minHeight={400}
-            enableResizing={{
-              top: true,
-              right: true,
-              bottom: true,
-              left: true,
-              topRight: true,
-              bottomRight: true,
-              bottomLeft: true,
-              topLeft: true,
-            }}
-          >
-            <ContentWrapper isVisible={isVisible}>
-              <Content />
-            </ContentWrapper>
-          </Rnd>
+          {isVisible && (
+            <Rnd
+              default={{
+                x: -300,
+                y: -400,
+                width: 300,
+                height: 400,
+              }}
+              minWidth={300}
+              minHeight={400}
+              enableResizing={{
+                top: true,
+                right: true,
+                bottom: true,
+                left: true,
+                topRight: true,
+                bottomRight: true,
+                bottomLeft: true,
+                topLeft: true,
+              }}
+            >
+              <ContentWrapper isVisible={true} onClose={toggleVisibility} showCloseButton={true}>
+                <Content />
+              </ContentWrapper>
+            </Rnd>
+          )}
         </>
       ) : (
         <ContentWrapper isVisible={isVisible}>
