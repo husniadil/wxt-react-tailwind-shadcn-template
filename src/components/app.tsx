@@ -1,31 +1,16 @@
 import reactLogo from "@/assets/react.svg";
 import wxtLogo from "@/assets/wxt.svg";
 import { FloatingActionButton } from "@/components/floating-action-button";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { PopupPanel } from "@/components/popup-panel";
 import { Button } from "@/components/ui/button";
-import "@/styles/globals.css";
-import { useState, useEffect } from "react";
-import { Rnd, DraggableData, RndDragEvent, RndResizeCallback } from "react-rnd";
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
-import { CloseButton } from "./close-button";
-import {
-  APP_NAME,
-  SHOW_CLOSE_BUTTON,
-  SHOW_THEME_TOGGLE,
-  POPUP_MIN_HEIGHT,
-  POPUP_MIN_WIDTH,
-} from "@/constants";
-import { cn } from "@/lib/utils";
-import { store } from "@/lib/storage";
+import { APP_NAME } from "@/constants";
+import "@/styles/globals.css";
+import { useState } from "react";
+import { Trigger } from "@/types/trigger";
 
 interface AppProps {
-  trigger: "popup" | "content";
-}
-
-interface ContentWrapperProps {
-  isVisible: boolean;
-  children: React.ReactNode;
-  onClose?: () => void;
+  trigger: Trigger;
 }
 
 const Content = () => {
@@ -87,115 +72,21 @@ const Content = () => {
   );
 };
 
-const ContentWrapper = ({ isVisible, children, onClose }: ContentWrapperProps) => {
-  return (
-    <div
-      className={cn(
-        isVisible ? "block" : "hidden",
-        "w-full h-full bg-white dark:bg-black p-4 text-center flex flex-col justify-between rounded-lg relative"
-      )}
-      style={{ minWidth: POPUP_MIN_WIDTH, minHeight: POPUP_MIN_HEIGHT }}
-    >
-      <div className="panel-drag-handle cursor-move absolute top-0 left-0 w-full h-10 flex items-center justify-end px-2 z-10">
-        {SHOW_THEME_TOGGLE && <ThemeToggle />}
-        {SHOW_CLOSE_BUTTON && onClose && <CloseButton onClick={onClose} />}
-      </div>
-      {children}
-    </div>
-  );
-};
-
 function App({ trigger }: AppProps) {
   const [isVisible, setIsVisible] = useState(trigger === "popup");
-  const [position, setPosition] = useState({ x: -POPUP_MIN_WIDTH, y: -POPUP_MIN_HEIGHT });
-  const [dimensions, setDimensions] = useState({
-    width: POPUP_MIN_WIDTH,
-    height: POPUP_MIN_HEIGHT,
-  });
-
-  // Get initial position and dimensions from storage
-  useEffect(() => {
-    if (trigger === "content") {
-      store.popupPosition.getValue().then(setPosition);
-      store.popupDimensions.getValue().then(setDimensions);
-    }
-  }, [trigger]);
 
   const toggleVisibility = () => {
     setIsVisible((prev) => !prev);
   };
 
-  // Handle position update when panel is dragged
-  const handleDragStop = (_e: RndDragEvent, d: DraggableData) => {
-    const newPosition = { x: d.x, y: d.y };
-    setPosition(newPosition);
-    store.popupPosition.setValue(newPosition);
-  };
-
-  // Handle size update when panel is resized
-  const handleResizeStop: RndResizeCallback = (_e, _direction, ref, _delta, position) => {
-    const newDimensions = {
-      width: ref.offsetWidth,
-      height: ref.offsetHeight,
-    };
-    const newPosition = { x: position.x, y: position.y };
-
-    setDimensions(newDimensions);
-    setPosition(newPosition);
-
-    store.popupDimensions.setValue(newDimensions);
-    store.popupPosition.setValue(newPosition);
-  };
-
-  if (trigger === "popup") {
-    return (
-      <ContentWrapper isVisible={isVisible}>
+  return (
+    <>
+      {trigger === Trigger.CONTENT && <FloatingActionButton onClick={toggleVisibility} />}
+      <PopupPanel isVisible={isVisible} onClose={toggleVisibility} trigger={trigger}>
         <Content />
-      </ContentWrapper>
-    );
-  }
-
-  if (trigger === "content") {
-    return (
-      <>
-        <FloatingActionButton onClick={toggleVisibility} />
-        {isVisible && (
-          <Rnd
-            default={{
-              x: position.x,
-              y: position.y,
-              width: dimensions.width,
-              height: dimensions.height,
-            }}
-            position={position}
-            size={{
-              width: dimensions.width,
-              height: dimensions.height,
-            }}
-            minWidth={POPUP_MIN_WIDTH}
-            minHeight={POPUP_MIN_HEIGHT}
-            dragHandleClassName="panel-drag-handle"
-            onDragStop={handleDragStop}
-            onResizeStop={handleResizeStop}
-            enableResizing={{
-              top: true,
-              right: true,
-              bottom: true,
-              left: true,
-              topRight: true,
-              bottomRight: true,
-              bottomLeft: true,
-              topLeft: true,
-            }}
-          >
-            <ContentWrapper isVisible={true} onClose={toggleVisibility}>
-              <Content />
-            </ContentWrapper>
-          </Rnd>
-        )}
-      </>
-    );
-  }
+      </PopupPanel>
+    </>
+  );
 }
 
 export default App;

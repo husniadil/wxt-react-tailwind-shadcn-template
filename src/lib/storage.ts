@@ -22,7 +22,6 @@ const popupDimensions = storage.defineItem<{ width: number; height: number }>(
   }
 );
 
-// Export everything under the store object
 export const store = {
   theme,
   popupPosition,
