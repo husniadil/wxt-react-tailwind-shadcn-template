@@ -91,11 +91,11 @@ const ContentWrapper = ({ isVisible, children, onClose }: ContentWrapperProps) =
     <div
       className={cn(
         isVisible ? "block" : "hidden",
-        `w-full h-full bg-white dark:bg-black p-4 text-center flex flex-col justify-between rounded-lg relative`
+        "w-full h-full bg-white dark:bg-black p-4 text-center flex flex-col justify-between rounded-lg relative"
       )}
       style={{ minWidth: WINDOW_WIDTH, minHeight: WINDOW_HEIGHT }}
     >
-      <div className="absolute top-2 right-2 flex items-center gap-2 z-10">
+      <div className="panel-drag-handle cursor-move absolute top-0 left-0 w-full h-10 flex items-center justify-end px-2 z-10">
         {SHOW_THEME_TOGGLE && <ThemeToggle />}
         {SHOW_CLOSE_BUTTON && onClose && <CloseButton onClick={onClose} />}
       </div>
@@ -133,6 +133,7 @@ function App({ trigger }: AppProps) {
             }}
             minWidth={WINDOW_WIDTH}
             minHeight={WINDOW_HEIGHT}
+            dragHandleClassName="panel-drag-handle"
             enableResizing={{
               top: true,
               right: true,
