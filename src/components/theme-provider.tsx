@@ -1,10 +1,9 @@
 "use client";
 
 import { APP_NAME } from "@/constants";
-import { THEME_DEFAULT } from "@/types/theme";
+import { Theme } from "@/types/theme";
 import { createContext, useContext, useEffect, useState } from "react";
 import { store } from "@/lib/storage";
-import { Theme } from "@/types/theme";
 
 type ThemeProviderProps = {
   children: React.ReactNode;
@@ -16,14 +15,14 @@ type ThemeProviderState = {
 };
 
 const initialState: ThemeProviderState = {
-  theme: THEME_DEFAULT,
+  theme: Theme.DEFAULT,
   setTheme: () => null,
 };
 
 const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(() => THEME_DEFAULT);
+  const [theme, setTheme] = useState<Theme>(() => Theme.DEFAULT);
 
   useEffect(() => {
     store.theme.getValue().then(setTheme);
@@ -40,10 +39,10 @@ export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
 
     root.classList.remove("light", "dark");
 
-    if (theme === "system") {
+    if (theme === Theme.DEFAULT) {
       const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light";
+        ? Theme.DARK
+        : Theme.LIGHT;
 
       root.classList.add(systemTheme);
       return;

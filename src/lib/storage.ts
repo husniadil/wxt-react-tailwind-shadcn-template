@@ -1,9 +1,9 @@
 import { POPUP_MIN_HEIGHT, POPUP_MIN_WIDTH } from "@/constants";
-import { Theme, THEME_DEFAULT } from "@/types/theme";
+import { Theme } from "@/types/theme";
 
 const theme = storage.defineItem<Theme>("local:vite-ui-theme", {
-  defaultValue: THEME_DEFAULT,
-  fallback: THEME_DEFAULT,
+  defaultValue: Theme.DEFAULT,
+  fallback: Theme.DEFAULT,
   version: 1,
 });
 
