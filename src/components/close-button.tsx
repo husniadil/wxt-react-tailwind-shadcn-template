@@ -7,7 +7,7 @@ export const CloseButton = ({ onClick }: { onClick: () => void }) => {
     <Button
       onClick={onClick}
       variant="ghost"
-      className="flex items-center justify-center text-black dark:text-white"
+      className="flex items-center justify-center text-black dark:text-white hover:text-[#D97757] dark:hover:text-[#D97757]"
       aria-label="Close"
     >
       <svg

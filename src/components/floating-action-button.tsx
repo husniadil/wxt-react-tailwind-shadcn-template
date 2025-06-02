@@ -11,10 +11,9 @@ export const FloatingActionButton = ({ onClick }: FloatingActionButtonProps) => 
       className="p-3 rounded-full bg-white dark:bg-black shadow-lg group relative cursor-pointer"
       aria-label="Toggle panel"
     >
-      <div className="absolute inset-0 rounded-full transition-all duration-300 group-hover:bg-[#54bc4a]/30 dark:group-hover:bg-[#54bc4a]/40 blur-md pointer-events-none"></div>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-6 w-6 relative text-black dark:text-white pointer-events-none"
+        className="h-6 w-6 relative text-black dark:text-white pointer-events-none transition-all duration-300 group-hover:text-[#D97757] dark:group-hover:text-[#D97757]"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
