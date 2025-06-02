@@ -4,18 +4,19 @@ import { FloatingActionButton } from "@/components/floating-action-button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import "@/styles/globals.css";
-import { useState } from "react";
-import { Rnd } from "react-rnd";
+import { useState, useEffect } from "react";
+import { Rnd, DraggableData, RndDragEvent, RndResizeCallback } from "react-rnd";
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
 import { CloseButton } from "./close-button";
 import {
   APP_NAME,
   SHOW_CLOSE_BUTTON,
   SHOW_THEME_TOGGLE,
-  WINDOW_HEIGHT,
-  WINDOW_WIDTH,
+  POPUP_MIN_HEIGHT,
+  POPUP_MIN_WIDTH,
 } from "@/constants";
 import { cn } from "@/lib/utils";
+import { store } from "@/lib/storage";
 
 interface AppProps {
   trigger: "popup" | "content";
@@ -93,7 +94,7 @@ const ContentWrapper = ({ isVisible, children, onClose }: ContentWrapperProps) =
         isVisible ? "block" : "hidden",
         "w-full h-full bg-white dark:bg-black p-4 text-center flex flex-col justify-between rounded-lg relative"
       )}
-      style={{ minWidth: WINDOW_WIDTH, minHeight: WINDOW_HEIGHT }}
+      style={{ minWidth: POPUP_MIN_WIDTH, minHeight: POPUP_MIN_HEIGHT }}
     >
       <div className="panel-drag-handle cursor-move absolute top-0 left-0 w-full h-10 flex items-center justify-end px-2 z-10">
         {SHOW_THEME_TOGGLE && <ThemeToggle />}
@@ -106,9 +107,44 @@ const ContentWrapper = ({ isVisible, children, onClose }: ContentWrapperProps) =
 
 function App({ trigger }: AppProps) {
   const [isVisible, setIsVisible] = useState(trigger === "popup");
+  const [position, setPosition] = useState({ x: -POPUP_MIN_WIDTH, y: -POPUP_MIN_HEIGHT });
+  const [dimensions, setDimensions] = useState({
+    width: POPUP_MIN_WIDTH,
+    height: POPUP_MIN_HEIGHT,
+  });
+
+  // Get initial position and dimensions from storage
+  useEffect(() => {
+    if (trigger === "content") {
+      store.popupPosition.getValue().then(setPosition);
+      store.popupDimensions.getValue().then(setDimensions);
+    }
+  }, [trigger]);
 
   const toggleVisibility = () => {
     setIsVisible((prev) => !prev);
+  };
+
+  // Handle position update when panel is dragged
+  const handleDragStop = (_e: RndDragEvent, d: DraggableData) => {
+    const newPosition = { x: d.x, y: d.y };
+    setPosition(newPosition);
+    store.popupPosition.setValue(newPosition);
+  };
+
+  // Handle size update when panel is resized
+  const handleResizeStop: RndResizeCallback = (_e, _direction, ref, _delta, position) => {
+    const newDimensions = {
+      width: ref.offsetWidth,
+      height: ref.offsetHeight,
+    };
+    const newPosition = { x: position.x, y: position.y };
+
+    setDimensions(newDimensions);
+    setPosition(newPosition);
+
+    store.popupDimensions.setValue(newDimensions);
+    store.popupPosition.setValue(newPosition);
   };
 
   if (trigger === "popup") {
@@ -126,14 +162,21 @@ function App({ trigger }: AppProps) {
         {isVisible && (
           <Rnd
             default={{
-              x: -WINDOW_WIDTH,
-              y: -WINDOW_HEIGHT,
-              width: WINDOW_WIDTH,
-              height: WINDOW_HEIGHT,
+              x: position.x,
+              y: position.y,
+              width: dimensions.width,
+              height: dimensions.height,
             }}
-            minWidth={WINDOW_WIDTH}
-            minHeight={WINDOW_HEIGHT}
+            position={position}
+            size={{
+              width: dimensions.width,
+              height: dimensions.height,
+            }}
+            minWidth={POPUP_MIN_WIDTH}
+            minHeight={POPUP_MIN_HEIGHT}
             dragHandleClassName="panel-drag-handle"
+            onDragStop={handleDragStop}
+            onResizeStop={handleResizeStop}
             enableResizing={{
               top: true,
               right: true,

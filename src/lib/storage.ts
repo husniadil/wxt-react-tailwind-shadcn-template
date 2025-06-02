@@ -1,3 +1,4 @@
+import { POPUP_MIN_HEIGHT, POPUP_MIN_WIDTH } from "@/constants";
 import { Theme, THEME_DEFAULT } from "@/types/theme";
 
 const theme = storage.defineItem<Theme>("local:vite-ui-theme", {
@@ -6,7 +7,24 @@ const theme = storage.defineItem<Theme>("local:vite-ui-theme", {
   version: 1,
 });
 
+const popupPosition = storage.defineItem<{ x: number; y: number }>("local:vite-popup-position", {
+  defaultValue: { x: -POPUP_MIN_WIDTH, y: -POPUP_MIN_HEIGHT },
+  fallback: { x: -POPUP_MIN_WIDTH, y: -POPUP_MIN_HEIGHT },
+  version: 1,
+});
+
+const popupDimensions = storage.defineItem<{ width: number; height: number }>(
+  "local:vite-popup-dimensions",
+  {
+    defaultValue: { width: POPUP_MIN_WIDTH, height: POPUP_MIN_HEIGHT },
+    fallback: { width: POPUP_MIN_WIDTH, height: POPUP_MIN_HEIGHT },
+    version: 1,
+  }
+);
+
 // Export everything under the store object
 export const store = {
   theme,
+  popupPosition,
+  popupDimensions,
 };
