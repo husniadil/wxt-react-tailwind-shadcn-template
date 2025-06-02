@@ -69,7 +69,7 @@ export function PopupPanel({
       )}
       style={{ minWidth: POPUP_MIN_WIDTH, minHeight: POPUP_MIN_HEIGHT }}
     >
-      <div className="panel-drag-handle cursor-move top-0 left-0 w-full flex items-center justify-between z-10 px-1">
+      <div className="panel-drag-handle cursor-move top-0 left-0 w-full flex items-center justify-between z-10">
         <div className="text-sm font-medium truncate text-black dark:text-white">{title}</div>
         <div className="flex items-center gap-1">
           {SHOW_THEME_TOGGLE && <ThemeToggle />}

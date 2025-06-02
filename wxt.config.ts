@@ -9,6 +9,6 @@ export default defineConfig({
     name: APP_NAME,
     version: "0.0.2",
     description: "manifest.json description",
-    permissions: ["activeTab", "storage"],
+    permissions: ["activeTab", "storage", "scripting"],
   },
 });

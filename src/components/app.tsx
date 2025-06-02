@@ -17,7 +17,7 @@ const Content = () => {
   const [count, setCount] = useState(0);
 
   return (
-    <Card className="w-full h-full border-0 shadow-none">
+    <Card className="w-full h-full border-2 shadow-none">
       <CardHeader className="flex flex-col items-center justify-center">
         <div className="flex gap-2">
           <h1 className="text-lg font-bold text-black dark:text-white">{APP_NAME}</h1>
@@ -73,10 +73,16 @@ const Content = () => {
 };
 
 function App({ trigger }: AppProps) {
-  const [isVisible, setIsVisible] = useState(trigger === "popup");
+  const [isVisible, setIsVisible] = useState(trigger === Trigger.POPUP);
 
   const toggleVisibility = () => {
-    setIsVisible((prev) => !prev);
+    if (trigger === Trigger.POPUP) {
+      // Close the popup directly
+      window.close();
+    } else {
+      // If in content mode, just toggle visibility as before
+      setIsVisible((prev) => !prev);
+    }
   };
 
   return (
