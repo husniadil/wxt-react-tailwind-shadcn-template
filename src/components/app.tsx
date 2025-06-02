@@ -17,10 +17,10 @@ const Content = () => {
   const [count, setCount] = useState(0);
 
   return (
-    <Card className="w-full h-full border-2 shadow-none">
+    <Card className="w-full h-full border-2 shadow-none gap-0">
       <CardHeader className="flex flex-col items-center justify-center">
         <div className="flex gap-2">
-          <h1 className="text-lg font-bold text-black dark:text-white">{APP_NAME}</h1>
+          <h1 className="text-lg font-bold text-primary">{APP_NAME}</h1>
         </div>
       </CardHeader>
       <CardContent className="flex flex-col items-center justify-center">
