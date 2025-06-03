@@ -7,14 +7,8 @@ import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card"
 import { APP_NAME } from "@/constants";
 import { store } from "@/lib/storage";
 import "@/styles/globals.css";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { Trigger } from "@/types/trigger";
-import { PortalContext } from "@/context/portal-context";
-import { SettingsPanel } from "@/components/settings/settings-panel";
-
-interface AppProps {
-  trigger: Trigger;
-}
 
 const Content = () => {
   const [count, setCount] = useState(0);
@@ -75,11 +69,9 @@ const Content = () => {
   );
 };
 
-function App({ trigger }: AppProps) {
-  const [isVisible, setIsVisible] = useState(trigger === Trigger.POPUP);
+function App() {
+  const [isVisible, setIsVisible] = useState(false);
   const [showFloatingButton, setShowFloatingButton] = useState(true);
-  const container = useContext(PortalContext);
-
   useEffect(() => {
     store.settings
       .getValue()
@@ -91,25 +83,13 @@ function App({ trigger }: AppProps) {
   }, []);
 
   const toggleVisibility = () => {
-    if (trigger === Trigger.POPUP) {
-      window.close();
-    } else {
-      setIsVisible((prev) => !prev);
-    }
+    setIsVisible((prev) => !prev);
   };
-
-  if (trigger === Trigger.POPUP) {
-    return (
-      <div className="p-4 w-[500px] h-[380px] text-primary bg-background flex flex-col">
-        <SettingsPanel container={container} />
-      </div>
-    );
-  }
 
   return (
     <>
       {showFloatingButton && <FloatingActionButton onClick={toggleVisibility} />}
-      <PopupPanel isVisible={isVisible} onClose={toggleVisibility} trigger={trigger}>
+      <PopupPanel isVisible={isVisible} onClose={toggleVisibility} trigger={Trigger.CONTENT}>
         <Content />
       </PopupPanel>
     </>

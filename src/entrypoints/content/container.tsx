@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { PortalContext } from "@/context/portal-context";
 import { ThemeProvider } from "@/components/theme-provider";
-import App from "@/components/app";
-import { Trigger } from "@/types/trigger";
+import App from "./app";
 
 export const Container = () => {
   const [container, setContainer] = useState<HTMLElement | null>(null);
@@ -16,7 +15,7 @@ export const Container = () => {
             id="content-wrapper"
             className="fixed bottom-4 right-4 flex flex-row-reverse items-end gap-4 z-[9999]"
           >
-            <App trigger={Trigger.CONTENT} />
+            <App />
           </div>
         </ThemeProvider>
       </PortalContext.Provider>
