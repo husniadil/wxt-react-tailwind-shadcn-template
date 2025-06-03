@@ -92,6 +92,7 @@ A modern, opinionated template for building browser extensions with WXT, React, 
 ├── src/
 │   ├── assets/             # Static assets used in the application
 │   ├── components/         # Reusable React components
+│   │   ├── settings/       # Settings components
 │   │   └── ui/             # shadcn/ui components
 │   ├── constants/          # Application constants
 │   ├── context/            # React context providers

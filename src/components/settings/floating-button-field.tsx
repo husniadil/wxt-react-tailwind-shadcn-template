@@ -45,10 +45,10 @@ export const FloatingButtonField = ({ onSavingStateChange }: FloatingButtonField
 
   return (
     <div className="grid grid-cols-3 items-center gap-4">
-      <Label htmlFor="showFloatingActionButton">Show Floating Button</Label>
+      <Label htmlFor="floatingActionButton">Floating Button</Label>
       <div className="flex items-center col-span-2">
         <Switch
-          id="showFloatingActionButton"
+          id="floatingActionButton"
           checked={value}
           onCheckedChange={handleChange}
           className="mr-2"

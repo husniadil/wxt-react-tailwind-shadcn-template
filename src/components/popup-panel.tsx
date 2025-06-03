@@ -87,7 +87,7 @@ export function PopupPanel({
           <a href="https://tailwindcss.com" className="underline">
             Tailwind CSS
           </a>
-          <a href="https://shadcn.com" className="underline">
+          <a href="https://ui.shadcn.com" className="underline">
             Shadcn UI
           </a>
         </div>
