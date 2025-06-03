@@ -2,22 +2,67 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { useContext, useEffect, useState } from "react";
 import { PortalContext } from "@/context/portal-context";
 import { Button } from "@/components/ui/button";
-import { Loader2, Settings } from "lucide-react";
+import { CheckIcon, ChevronsUpDownIcon, Loader2, Settings } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { store } from "@/lib/storage";
 import { useDebouncedCallback } from "use-debounce";
+import { cn } from "@/lib/utils";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+
+// Define available extension framework options for the combobox
+const frameworks = [
+  {
+    value: "wxt",
+    label: "WXT (Web Extension Tools)",
+  },
+  {
+    value: "plasmo",
+    label: "Plasmo",
+  },
+  {
+    value: "chrome-extension-cli",
+    label: "Chrome Extension CLI",
+  },
+  {
+    value: "crxjs",
+    label: "CRXJS Vite Plugin",
+  },
+  {
+    value: "webpack-extension-reloader",
+    label: "Webpack Extension Reloader",
+  },
+  {
+    value: "webextension-polyfill",
+    label: "WebExtension Polyfill",
+  },
+];
 
 export const SettingsButton = () => {
   const container = useContext(PortalContext);
-  const [settings, setSettings] = useState({ exampleField1: "", exampleField2: "" });
+  const [settings, setSettings] = useState({ apiKey: "", extensionFramework: "" });
+  const [open, setOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     const loadSettings = async () => {
       const savedSettings = await store.settings.getValue();
-      setSettings(savedSettings);
+      if (savedSettings && typeof savedSettings === "object") {
+        const settings = savedSettings as Record<string, string>;
+        const apiKey = settings.exampleField1 || settings.apiKey || "";
+        const extensionFramework = settings.exampleField2 || settings.extensionFramework || "";
+        setSettings({ apiKey, extensionFramework });
+      } else {
+        setSettings({ apiKey: "", extensionFramework: "" });
+      }
     };
     loadSettings();
   }, []);
@@ -61,22 +106,72 @@ export const SettingsButton = () => {
           </div>
           <div className="grid gap-2">
             <div className="grid grid-cols-3 items-center gap-4">
-              <Label htmlFor="exampleField1">Example Field 1</Label>
+              <Label htmlFor="apiKey">API Key</Label>
               <Input
-                id="exampleField1"
+                id="apiKey"
+                type="password"
                 className="col-span-2 h-8"
-                value={settings.exampleField1}
-                onChange={(e) => handleInputChange("exampleField1", e.target.value)}
+                placeholder="Enter your API key"
+                value={settings.apiKey}
+                onChange={(e) => handleInputChange("apiKey", e.target.value)}
               />
             </div>
             <div className="grid grid-cols-3 items-center gap-4">
-              <Label htmlFor="exampleField2">Example Field 2</Label>
-              <Input
-                id="exampleField2"
-                className="col-span-2 h-8"
-                value={settings.exampleField2}
-                onChange={(e) => handleInputChange("exampleField2", e.target.value)}
-              />
+              <Label htmlFor="extensionFramework">Extension Framework</Label>
+              <div className="col-span-2">
+                <Popover open={open} onOpenChange={setOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={open}
+                      className="w-full h-8 justify-between"
+                    >
+                      {settings.extensionFramework
+                        ? frameworks.find(
+                            (framework) => framework.value === settings.extensionFramework
+                          )?.label
+                        : "Select framework..."}
+                      <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent
+                    className="w-[200px] p-0"
+                    side="right"
+                    align="start"
+                    container={container}
+                  >
+                    <Command>
+                      <CommandInput placeholder="Search framework..." />
+                      <CommandList>
+                        <CommandEmpty>No framework found.</CommandEmpty>
+                        <CommandGroup>
+                          {frameworks.map((framework) => (
+                            <CommandItem
+                              key={framework.value}
+                              value={framework.value}
+                              onSelect={(currentValue) => {
+                                handleInputChange("extensionFramework", currentValue);
+                                setOpen(false);
+                              }}
+                            >
+                              <CheckIcon
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  settings.extensionFramework === framework.value
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                )}
+                              />
+                              {framework.label}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+              </div>
             </div>
           </div>
         </div>

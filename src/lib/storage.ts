@@ -22,11 +22,11 @@ const popupDimensions = storage.defineItem<{ width: number; height: number }>(
   }
 );
 
-const settings = storage.defineItem<{ exampleField1: string; exampleField2: string }>(
+const settings = storage.defineItem<{ apiKey: string; extensionFramework: string }>(
   "local:vite-settings",
   {
-    defaultValue: { exampleField1: "", exampleField2: "" },
-    fallback: { exampleField1: "", exampleField2: "" },
+    defaultValue: { apiKey: "", extensionFramework: "" },
+    fallback: { apiKey: "", extensionFramework: "" },
     version: 1,
   }
 );
