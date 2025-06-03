@@ -6,6 +6,8 @@ import { cn } from "@/lib/utils";
 import { APP_NAME, POPUP_MIN_HEIGHT, POPUP_MIN_WIDTH } from "@/constants";
 import { Trigger } from "@/types/trigger";
 import { SettingsButton } from "./settings-button";
+import { Position } from "@/types/position";
+import { Dimensions } from "@/types/dimensions";
 
 interface PopupPanelProps {
   isVisible: boolean;
@@ -22,8 +24,8 @@ export function PopupPanel({
   trigger,
   title = APP_NAME,
 }: PopupPanelProps) {
-  const [position, setPosition] = useState({ x: -POPUP_MIN_WIDTH, y: -POPUP_MIN_HEIGHT });
-  const [dimensions, setDimensions] = useState({
+  const [position, setPosition] = useState<Position>({ x: -POPUP_MIN_WIDTH, y: -POPUP_MIN_HEIGHT });
+  const [dimensions, setDimensions] = useState<Dimensions>({
     width: POPUP_MIN_WIDTH,
     height: POPUP_MIN_HEIGHT,
   });

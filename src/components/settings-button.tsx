@@ -2,13 +2,14 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { useContext, useEffect, useState } from "react";
 import { PortalContext } from "@/context/portal-context";
 import { Button } from "@/components/ui/button";
-import { CheckIcon, ChevronsUpDownIcon, Loader2, Settings } from "lucide-react";
+import { CheckIcon, ChevronsUpDownIcon, Loader2, SettingsIcon } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { store } from "@/lib/storage";
 import { useDebouncedCallback } from "use-debounce";
 import { cn } from "@/lib/utils";
+import { Switch } from "@/components/ui/switch";
 import {
   Command,
   CommandEmpty,
@@ -17,38 +18,16 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-
-// Define available extension framework options for the combobox
-const frameworks = [
-  {
-    value: "wxt",
-    label: "WXT (Web Extension Tools)",
-  },
-  {
-    value: "plasmo",
-    label: "Plasmo",
-  },
-  {
-    value: "chrome-extension-cli",
-    label: "Chrome Extension CLI",
-  },
-  {
-    value: "crxjs",
-    label: "CRXJS Vite Plugin",
-  },
-  {
-    value: "webpack-extension-reloader",
-    label: "Webpack Extension Reloader",
-  },
-  {
-    value: "webextension-polyfill",
-    label: "WebExtension Polyfill",
-  },
-];
+import { frameworks } from "@/data/frameworks";
+import { Settings } from "@/types/settings";
 
 export const SettingsButton = () => {
   const container = useContext(PortalContext);
-  const [settings, setSettings] = useState({ apiKey: "", extensionFramework: "" });
+  const [settings, setSettings] = useState<Settings>({
+    apiKey: "",
+    extensionFramework: "",
+    showFloatingActionButton: true,
+  });
   const [open, setOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -56,18 +35,18 @@ export const SettingsButton = () => {
     const loadSettings = async () => {
       const savedSettings = await store.settings.getValue();
       if (savedSettings && typeof savedSettings === "object") {
-        const settings = savedSettings as Record<string, string>;
-        const apiKey = settings.exampleField1 || settings.apiKey || "";
-        const extensionFramework = settings.exampleField2 || settings.extensionFramework || "";
-        setSettings({ apiKey, extensionFramework });
+        const apiKey = savedSettings.apiKey || "";
+        const extensionFramework = savedSettings.extensionFramework || "";
+        const showFloatingActionButton = savedSettings.showFloatingActionButton ?? true;
+        setSettings({ apiKey, extensionFramework, showFloatingActionButton });
       } else {
-        setSettings({ apiKey: "", extensionFramework: "" });
+        setSettings({ apiKey: "", extensionFramework: "", showFloatingActionButton: true });
       }
     };
     loadSettings();
   }, []);
 
-  const debouncedSaveSettings = useDebouncedCallback(async (newSettings) => {
+  const debouncedSaveSettings = useDebouncedCallback(async (newSettings: Settings) => {
     setIsSaving(true);
     return store.settings
       .setValue(newSettings)
@@ -77,7 +56,7 @@ export const SettingsButton = () => {
       .finally(() => setTimeout(() => setIsSaving(false), 500));
   }, 500);
 
-  const handleInputChange = (field: string, value: string) => {
+  const handleInputChange = (field: string, value: string | boolean) => {
     const newSettings = { ...settings, [field]: value };
     setSettings(newSettings);
     debouncedSaveSettings(newSettings);
@@ -87,7 +66,7 @@ export const SettingsButton = () => {
     <Popover>
       <PopoverTrigger asChild className="group">
         <Button variant="ghost" size="icon" className="h-8 w-8">
-          <Settings className="h-4 w-4 text-primary group-hover:text-[#D97757] dark:group-hover:text-[#D97757]" />
+          <SettingsIcon className="h-4 w-4 text-primary group-hover:text-[#D97757] dark:group-hover:text-[#D97757]" />
         </Button>
       </PopoverTrigger>
       <PopoverContent
@@ -115,6 +94,22 @@ export const SettingsButton = () => {
                 value={settings.apiKey}
                 onChange={(e) => handleInputChange("apiKey", e.target.value)}
               />
+            </div>
+            <div className="grid grid-cols-3 items-center gap-4">
+              <Label htmlFor="showFloatingActionButton">Show Floating Button</Label>
+              <div className="flex items-center">
+                <Switch
+                  id="showFloatingActionButton"
+                  checked={settings.showFloatingActionButton}
+                  onCheckedChange={(checked) =>
+                    handleInputChange("showFloatingActionButton", checked)
+                  }
+                  className="mr-2"
+                />
+                <span className="text-sm text-muted-foreground">
+                  {settings.showFloatingActionButton ? "Enabled" : "Disabled"}
+                </span>
+              </div>
             </div>
             <div className="grid grid-cols-3 items-center gap-4">
               <Label htmlFor="extensionFramework">Extension Framework</Label>
