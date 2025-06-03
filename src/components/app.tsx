@@ -85,7 +85,7 @@ function App({ trigger }: AppProps) {
       setShowFloatingButton(settings.showFloatingActionButton ?? true)
     );
     return () => unwatch();
-  }, [showFloatingButton]);
+  }, []);
 
   const toggleVisibility = () => {
     if (trigger === Trigger.POPUP) {

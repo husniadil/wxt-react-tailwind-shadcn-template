@@ -28,7 +28,7 @@ export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
     store.theme.getValue().then(setTheme);
     const unwatch = store.theme.watch(setTheme);
     return () => unwatch();
-  }, [theme]);
+  }, []);
 
   useEffect(() => {
     const host = document.querySelector(APP_NAME);
