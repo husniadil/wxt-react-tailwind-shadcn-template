@@ -76,7 +76,26 @@ export function PopupPanel({
           {SHOW_CLOSE_BUTTON && onClose && <CloseButton onClick={onClose} />}
         </div>
       </div>
-      {children}
+      <div className="flex-1">{children}</div>
+      <div className="pt-2 text-muted-foreground text-xs flex items-center justify-between w-full">
+        <div className="flex items-center gap-1">
+          Powered by{" "}
+          <a href="https://wxt.dev" className="underline">
+            WXT
+          </a>
+        </div>
+        <div className="flex items-center gap-1">
+          <a href="https://react.dev" className="underline">
+            React
+          </a>
+          <a href="https://tailwindcss.com" className="underline">
+            Tailwind CSS
+          </a>
+          <a href="https://shadcn.com" className="underline">
+            Shadcn UI
+          </a>
+        </div>
+      </div>
     </div>
   );
 
