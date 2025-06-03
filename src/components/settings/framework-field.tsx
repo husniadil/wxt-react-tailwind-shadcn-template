@@ -71,12 +71,7 @@ export const FrameworkField = ({ container, onSavingStateChange }: FrameworkFiel
               <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent
-            className="w-[200px] p-0"
-            side="right"
-            align="start"
-            container={container}
-          >
+          <PopoverContent className="w-[200px] p-0" align="start" container={container}>
             <Command>
               <CommandInput placeholder="Search framework..." />
               <CommandEmpty>No framework found.</CommandEmpty>

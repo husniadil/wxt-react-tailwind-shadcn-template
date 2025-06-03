@@ -7,8 +7,10 @@ import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card"
 import { APP_NAME } from "@/constants";
 import { store } from "@/lib/storage";
 import "@/styles/globals.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Trigger } from "@/types/trigger";
+import { PortalContext } from "@/context/portal-context";
+import { SettingsPanel } from "@/components/settings/settings-panel";
 
 interface AppProps {
   trigger: Trigger;
@@ -76,6 +78,7 @@ const Content = () => {
 function App({ trigger }: AppProps) {
   const [isVisible, setIsVisible] = useState(trigger === Trigger.POPUP);
   const [showFloatingButton, setShowFloatingButton] = useState(true);
+  const container = useContext(PortalContext);
 
   useEffect(() => {
     store.settings
@@ -95,11 +98,17 @@ function App({ trigger }: AppProps) {
     }
   };
 
+  if (trigger === Trigger.POPUP) {
+    return (
+      <div className="p-4 w-[500px] h-[380px] text-primary bg-background flex flex-col">
+        <SettingsPanel container={container} />
+      </div>
+    );
+  }
+
   return (
     <>
-      {trigger === Trigger.CONTENT && showFloatingButton && (
-        <FloatingActionButton onClick={toggleVisibility} />
-      )}
+      {showFloatingButton && <FloatingActionButton onClick={toggleVisibility} />}
       <PopupPanel isVisible={isVisible} onClose={toggleVisibility} trigger={trigger}>
         <Content />
       </PopupPanel>

@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { PortalContext } from "@/context/portal-context";
 import { Button } from "@/components/ui/button";
 import { SettingsIcon } from "lucide-react";
-import { SettingsPanel } from "@/components/settings/settings-panel";
+import { SettingsPopover } from "@/components/settings/settings-popover";
 
 export const SettingsButton = () => {
   const container = useContext(PortalContext);
@@ -15,7 +15,7 @@ export const SettingsButton = () => {
           <SettingsIcon className="h-4 w-4 text-primary group-hover:text-[#D97757] dark:group-hover:text-[#D97757]" />
         </Button>
       </PopoverTrigger>
-      <SettingsPanel container={container} />
+      <SettingsPopover container={container} />
     </Popover>
   );
 };
