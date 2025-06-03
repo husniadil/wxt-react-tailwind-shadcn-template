@@ -7,7 +7,7 @@ export default defineConfig({
   srcDir: "./src",
   manifest: {
     name: APP_NAME,
-    version: "0.0.2",
+    version: "0.1.0",
     description: "manifest.json description",
     permissions: ["activeTab", "storage", "scripting"],
   },
