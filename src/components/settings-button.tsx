@@ -52,13 +52,12 @@ export const SettingsButton = () => {
         <div className="grid gap-4">
           <div className="space-y-2">
             <div className="flex justify-between items-center">
-              <h4 className="leading-none font-medium">Settings</h4>
+              <h4 className="leading-none font-bold">Settings</h4>
               <div className="flex items-center gap-2">
-                {isSaving && <Loader2 className="h-5 w-5 text-primary animate-spin" />}
+                {isSaving && <Loader2 className="h-4 w-4 text-primary animate-spin" />}
                 <ThemeToggle />
               </div>
             </div>
-            <p className="text-muted-foreground text-sm">Configure the extension.</p>
           </div>
           <div className="grid gap-2">
             <div className="grid grid-cols-3 items-center gap-4">
