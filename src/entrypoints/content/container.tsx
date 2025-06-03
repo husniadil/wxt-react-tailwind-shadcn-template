@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Context } from "@/context/context";
+import { PortalContext } from "@/context/portal-context";
 import { ThemeProvider } from "@/components/theme-provider";
 import App from "@/components/app";
 import { Trigger } from "@/types/trigger";
@@ -9,7 +9,7 @@ export const Container = () => {
 
   return (
     <React.StrictMode>
-      <Context.Provider value={container}>
+      <PortalContext.Provider value={container}>
         <ThemeProvider>
           <div
             ref={setContainer}
@@ -19,7 +19,7 @@ export const Container = () => {
             <App trigger={Trigger.CONTENT} />
           </div>
         </ThemeProvider>
-      </Context.Provider>
+      </PortalContext.Provider>
     </React.StrictMode>
   );
 };

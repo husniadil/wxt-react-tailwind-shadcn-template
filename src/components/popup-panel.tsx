@@ -1,17 +1,11 @@
 import { useEffect, useState } from "react";
 import { Rnd, DraggableData, RndDragEvent, RndResizeCallback } from "react-rnd";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { CloseButton } from "@/components/close-button";
 import { store } from "@/lib/storage";
 import { cn } from "@/lib/utils";
-import {
-  APP_NAME,
-  SHOW_CLOSE_BUTTON,
-  SHOW_THEME_TOGGLE,
-  POPUP_MIN_HEIGHT,
-  POPUP_MIN_WIDTH,
-} from "@/constants";
+import { APP_NAME, POPUP_MIN_HEIGHT, POPUP_MIN_WIDTH } from "@/constants";
 import { Trigger } from "@/types/trigger";
+import { SettingsButton } from "./settings-button";
 
 interface PopupPanelProps {
   isVisible: boolean;
@@ -72,8 +66,8 @@ export function PopupPanel({
       <div className="panel-drag-handle cursor-move top-0 left-0 w-full flex items-center justify-between z-[9999] pb-2">
         <div className="pl-4 text-sm font-medium truncate text-primary">{title}</div>
         <div className="flex items-center gap-1">
-          {SHOW_THEME_TOGGLE && <ThemeToggle />}
-          {SHOW_CLOSE_BUTTON && onClose && <CloseButton onClick={onClose} />}
+          <SettingsButton />
+          {onClose && <CloseButton onClick={onClose} />}
         </div>
       </div>
       <div className="flex-1">{children}</div>
