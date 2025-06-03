@@ -14,7 +14,7 @@ export const Container = () => {
           <div
             ref={setContainer}
             id="content-wrapper"
-            className="fixed bottom-4 right-4 flex flex-row-reverse items-end gap-4 z-50"
+            className="fixed bottom-4 right-4 flex flex-row-reverse items-end gap-4 z-[9999]"
           >
             <App trigger={Trigger.CONTENT} />
           </div>

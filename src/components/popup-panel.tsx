@@ -65,11 +65,11 @@ export function PopupPanel({
     <div
       className={cn(
         isVisible ? "block" : "hidden",
-        "w-full h-full bg-background p-2 text-center flex flex-col rounded-lg relative border-2"
+        "w-full h-full bg-background p-2 text-center flex flex-col rounded-sm relative border-2"
       )}
       style={{ minWidth: POPUP_MIN_WIDTH }}
     >
-      <div className="panel-drag-handle cursor-move top-0 left-0 w-full flex items-center justify-between z-10 pb-2">
+      <div className="panel-drag-handle cursor-move top-0 left-0 w-full flex items-center justify-between z-[9999] pb-2">
         <div className="pl-4 text-sm font-medium truncate text-primary">{title}</div>
         <div className="flex items-center gap-1">
           {SHOW_THEME_TOGGLE && <ThemeToggle />}

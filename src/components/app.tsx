@@ -17,7 +17,7 @@ const Content = () => {
   const [count, setCount] = useState(0);
 
   return (
-    <Card className="w-full h-full border-2 shadow-none gap-0">
+    <Card className="w-full h-full border-2 rounded-sm shadow-none gap-0">
       <CardHeader className="flex flex-col items-center justify-center">
         <div className="flex gap-2">
           <h1 className="text-lg font-bold text-primary">{APP_NAME}</h1>
