@@ -44,7 +44,8 @@
     "react-rnd": "^10.5.2",
     "tailwind-merge": "^3.3.0",
     "tailwindcss": "^4.1.8",
-    "tw-animate-css": "^1.3.3"
+    "tw-animate-css": "^1.3.3",
+    "use-debounce": "^10.0.4"
   },
   "devDependencies": {
     "@types/react": "^19.1.6",

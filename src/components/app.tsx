@@ -77,10 +77,8 @@ function App({ trigger }: AppProps) {
 
   const toggleVisibility = () => {
     if (trigger === Trigger.POPUP) {
-      // Close the popup directly
       window.close();
     } else {
-      // If in content mode, just toggle visibility as before
       setIsVisible((prev) => !prev);
     }
   };
