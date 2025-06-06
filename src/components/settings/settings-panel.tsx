@@ -5,11 +5,7 @@ import { FloatingButtonField } from "@/components/settings/floating-button-field
 import { FrameworkField } from "@/components/settings/framework-field";
 import { Loader2 } from "lucide-react";
 
-export interface SettingsPanel {
-  container?: HTMLElement | null;
-}
-
-export const SettingsPanel = ({ container }: SettingsPanel) => {
+export const SettingsPanel = () => {
   const [isSaving, setIsSaving] = useState(false);
 
   const handleSavingStateChange = (saving: boolean) => {
@@ -17,10 +13,10 @@ export const SettingsPanel = ({ container }: SettingsPanel) => {
   };
 
   return (
-    <div className="grid gap-4">
-      <div className="space-y-2">
+    <div className="p-4">
+      <div className="pb-4">
         <div className="flex justify-between items-center">
-          <h4 className="leading-none font-bold">Settings</h4>
+          <h2 className="text-lg font-semibold">Settings</h2>
           <div className="flex items-center gap-2">
             {isSaving && <Loader2 className="h-4 w-4 text-primary animate-spin" />}
             <ThemeToggle />
@@ -30,7 +26,7 @@ export const SettingsPanel = ({ container }: SettingsPanel) => {
       <div className="grid gap-2">
         <ApiKeyField onSavingStateChange={handleSavingStateChange} />
         <FloatingButtonField onSavingStateChange={handleSavingStateChange} />
-        <FrameworkField container={container} onSavingStateChange={handleSavingStateChange} />
+        <FrameworkField onSavingStateChange={handleSavingStateChange} />
       </div>
     </div>
   );

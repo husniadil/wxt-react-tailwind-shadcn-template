@@ -1,21 +1,22 @@
 import React, { useState } from "react";
 import { PortalContext } from "@/context/portal-context";
 import { ThemeProvider } from "@/components/theme-provider";
-import App from "./app";
 
-export const Container = () => {
+export const MainContainer = ({
+  className,
+  children,
+}: {
+  className?: string;
+  children: React.ReactNode;
+}) => {
   const [container, setContainer] = useState<HTMLElement | null>(null);
 
   return (
     <React.StrictMode>
       <PortalContext.Provider value={container}>
         <ThemeProvider>
-          <div
-            ref={setContainer}
-            id="content-wrapper"
-            className="fixed bottom-4 right-4 flex flex-row-reverse items-end gap-4 z-[9999]"
-          >
-            <App />
+          <div ref={setContainer} className={className}>
+            {children}
           </div>
         </ThemeProvider>
       </PortalContext.Provider>
