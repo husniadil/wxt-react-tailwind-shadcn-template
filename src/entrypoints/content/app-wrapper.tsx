@@ -25,7 +25,11 @@ function AppWrapper() {
 
   return (
     <>
-      {showFloatingButton && <FloatingActionButton onClick={toggleVisibility} />}
+      {showFloatingButton && (
+        <div aria-live="polite">
+          <FloatingActionButton onClick={toggleVisibility} />
+        </div>
+      )}
       <AppPanel isVisible={isVisible} trigger={Trigger.CONTENT}>
         <App />
       </AppPanel>

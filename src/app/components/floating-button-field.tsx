@@ -44,16 +44,26 @@ export const FloatingButtonField = ({ onSavingStateChange }: FloatingButtonField
   };
 
   return (
-    <div className="grid grid-cols-3 items-center gap-4">
-      <Label htmlFor="floatingActionButton">Floating Button</Label>
+    <div
+      className="grid grid-cols-3 items-center gap-4"
+      role="group"
+      aria-labelledby="floatingButton-group"
+    >
+      <Label htmlFor="floatingActionButton" id="floatingButton-group">
+        Floating Button
+      </Label>
       <div className="flex items-center col-span-2">
         <Switch
           id="floatingActionButton"
           checked={value}
           onCheckedChange={handleChange}
           className="mr-2"
+          aria-describedby="floatingButton-desc"
         />
         <span className="text-sm text-muted-foreground">{value ? "Enabled" : "Disabled"}</span>
+        <div id="floatingButton-desc" className="sr-only">
+          Toggle the visibility of the floating action button at the bottom right of the screen
+        </div>
       </div>
     </div>
   );

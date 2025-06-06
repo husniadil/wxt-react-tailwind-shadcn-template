@@ -15,7 +15,12 @@ export const MainContainer = ({
     <React.StrictMode>
       <PortalContext.Provider value={container}>
         <ThemeProvider>
-          <div ref={setContainer} className={className}>
+          <div
+            ref={setContainer}
+            className={className}
+            role="main"
+            aria-label="Application content"
+          >
             {children}
           </div>
         </ThemeProvider>

@@ -41,17 +41,28 @@ export const ApiKeyField = ({ onSavingStateChange }: ApiKeyFieldProps) => {
   };
 
   return (
-    <div className="grid grid-cols-3 items-center gap-4">
-      <Label htmlFor="apiKey">API Key</Label>
+    <div
+      className="grid grid-cols-3 items-center gap-4"
+      role="group"
+      aria-labelledby="apiKey-group"
+    >
+      <Label htmlFor="apiKey" id="apiKey-group">
+        API Key
+      </Label>
       <div className="col-span-2">
         <Input
           id="apiKey"
           type="password"
           className="h-8 w-full"
           placeholder="Enter your API key"
+          aria-describedby="apiKey-desc"
+          autoComplete="off"
           value={value}
           onChange={handleChange}
         />
+        <div id="apiKey-desc" className="sr-only">
+          Your private API key used for authentication with external services
+        </div>
       </div>
     </div>
   );

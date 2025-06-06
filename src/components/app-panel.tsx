@@ -58,23 +58,31 @@ export function AppPanel({ isVisible, children, trigger, title = APP_NAME }: App
         "w-full h-full bg-background p-2 text-center flex flex-col rounded-sm relative border-2 overflow-auto"
       )}
       style={{ minWidth: POPUP_MIN_WIDTH }}
+      role="dialog"
+      aria-labelledby="panel-title"
+      aria-modal="true"
     >
       <div className="panel-drag-handle cursor-move top-0 left-0 w-full flex items-center justify-between z-[9999] pb-2">
-        <div className="pl-4 text-sm font-medium truncate text-primary">{title}</div>
+        <div id="panel-title" className="pl-4 text-sm font-medium truncate text-primary">
+          {title}
+        </div>
         <div className="flex items-center gap-1">
           <SettingsButton isActive={showSettings} onClick={() => setShowSettings(!showSettings)} />
         </div>
       </div>
-      <div className="flex-1">
+      <div className="flex-1" role="region" aria-label="Panel content">
         {showSettings ? (
-          <div className="w-full bg-background shadow-lg rounded-lg">
+          <div className="w-full bg-background shadow-lg rounded-lg" aria-live="polite">
             <SettingsPanel />
           </div>
         ) : (
           children
         )}
       </div>
-      <div className="pt-2 text-muted-foreground text-xs flex items-center justify-between w-full">
+      <div
+        className="pt-2 text-muted-foreground text-xs flex items-center justify-between w-full"
+        role="contentinfo"
+      >
         <div className="flex items-center gap-1">
           Powered by{" "}
           <a href="https://wxt.dev" className="underline">

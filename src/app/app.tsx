@@ -10,10 +10,16 @@ export const App = () => {
   const [count, setCount] = useState(0);
 
   return (
-    <Card className="w-full h-full border-2 rounded-sm shadow-none gap-0">
+    <Card
+      className="w-full h-full border-2 rounded-sm shadow-none gap-0"
+      role="region"
+      aria-label="App content"
+    >
       <CardHeader className="flex flex-col items-center justify-center">
         <div className="flex gap-2">
-          <h1 className="text-lg font-bold text-primary">{APP_NAME}</h1>
+          <h1 className="text-lg font-bold text-primary" id="app-title">
+            {APP_NAME}
+          </h1>
         </div>
       </CardHeader>
       <CardContent className="flex flex-col items-center justify-center">
@@ -46,12 +52,16 @@ export const App = () => {
           </a>
         </div>
         <div className="py-2">
-          <Button onClick={() => setCount((count) => count + 1)} size="sm">
+          <Button
+            onClick={() => setCount((count) => count + 1)}
+            size="sm"
+            aria-label="Increment counter"
+          >
             count is {count}
           </Button>
         </div>
       </CardContent>
-      <CardFooter className="mt-auto flex flex-col items-center">
+      <CardFooter className="mt-auto flex flex-col items-center" role="contentinfo">
         <p className="text-xs text-gray-500 dark:text-gray-400">
           Edit{" "}
           <code className="font-mono bg-gray-100 dark:bg-gray-800 px-1 rounded">

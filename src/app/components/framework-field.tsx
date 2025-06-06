@@ -56,8 +56,14 @@ export const FrameworkField = ({ onSavingStateChange }: FrameworkFieldProps) => 
   };
 
   return (
-    <div className="grid grid-cols-3 items-center gap-4">
-      <Label htmlFor="extensionFramework">Framework</Label>
+    <div
+      className="grid grid-cols-3 items-center gap-4"
+      role="group"
+      aria-labelledby="framework-group"
+    >
+      <Label htmlFor="extensionFramework" id="framework-group">
+        Framework
+      </Label>
       <div className="col-span-2 flex items-center gap-2">
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
@@ -75,14 +81,18 @@ export const FrameworkField = ({ onSavingStateChange }: FrameworkFieldProps) => 
           </PopoverTrigger>
           <PopoverContent className="w-[200px] p-0" align="start" side="top" container={container}>
             <Command>
-              <CommandInput placeholder="Search framework..." />
-              <CommandEmpty>No framework found.</CommandEmpty>
-              <CommandGroup className="max-h-[240px] overflow-auto">
+              <CommandInput placeholder="Search framework..." aria-label="Search for a framework" />
+              <CommandEmpty aria-live="polite">No framework found.</CommandEmpty>
+              <CommandGroup
+                className="max-h-[240px] overflow-auto"
+                aria-label="Available frameworks"
+              >
                 {frameworks.map((framework) => (
                   <CommandItem
                     key={framework.value}
                     value={framework.value}
                     onSelect={(currentValue) => handleSelect(currentValue)}
+                    aria-selected={value === framework.value}
                   >
                     <CheckIcon
                       className={cn(
