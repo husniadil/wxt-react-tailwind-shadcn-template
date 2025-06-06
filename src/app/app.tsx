@@ -65,7 +65,7 @@ export const App = () => {
         <p className="text-xs text-gray-500 dark:text-gray-400">
           Edit{" "}
           <code className="font-mono bg-gray-100 dark:bg-gray-800 px-1 rounded">
-            src/entrypoints/content/app.tsx
+            src/app/app.tsx
           </code>{" "}
           <br />
           and save to test HMR

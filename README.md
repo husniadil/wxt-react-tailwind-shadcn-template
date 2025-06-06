@@ -14,9 +14,13 @@ A modern, opinionated template for building browser extensions with WXT, React, 
 
 ## 📸 Screenshots
 
-### Content UI
+### Content UI - Main
 
 ![Content UI](./screenshots/content.png)
+
+### Content UI - Settings
+
+![Content UI](./screenshots/content-settings.png)
 
 ### Popup UI
 
@@ -86,16 +90,19 @@ A modern, opinionated template for building browser extensions with WXT, React, 
 │   ├── icon/               # Extension icons in various sizes
 ├── screenshots/            # Extension screenshots
 ├── src/
+│   ├── app/                # App content / business logic
 │   ├── assets/             # Static assets used in the application
 │   ├── components/         # Reusable React components
 │   │   ├── settings/       # Settings components
 │   │   └── ui/             # shadcn/ui components
 │   ├── constants/          # Application constants
 │   ├── context/            # React context providers
+│   ├── data/               # Dummy data
 │   ├── entrypoints/        # Extension entry points
 │   │   ├── background/     # Background script
 │   │   ├── content/        # Content scripts
 │   │   └── popup/          # Popup UI
+│   ├── hooks/              # Custom hooks
 │   ├── lib/                # Utility functions
 │   ├── styles/             # Global styles and CSS
 │   └── types/              # TypeScript type definitions
