@@ -1,0 +1,9 @@
+import { defineWebExtConfig } from "wxt";
+
+export default defineWebExtConfig({
+  binaries: {
+    chrome: "/path/to/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing", // Use Chrome Testing instead of regular Chrome
+    firefox: "firefoxdeveloperedition", // Use Firefox Developer Edition instead of regular Firefox
+    edge: "/path/to/edge", // Open MS Edge when running "wxt -b edge"
+  },
+});
