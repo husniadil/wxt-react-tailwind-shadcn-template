@@ -2,7 +2,7 @@ import { APP_NAME } from "@/constants";
 import "@/styles/globals.css";
 import ReactDOM from "react-dom/client";
 import { MainContainer } from "@/components/main-container";
-import App from "./app";
+import AppWrapper from "./app-wrapper";
 
 export default defineContentScript({
   matches: ["<all_urls>"],
@@ -22,7 +22,7 @@ export default defineContentScript({
         const root = ReactDOM.createRoot(app);
         root.render(
           <MainContainer className="fixed bottom-4 right-4 flex flex-row-reverse items-end gap-4 z-[9999]">
-            <App />
+            <AppWrapper />
           </MainContainer>
         );
         return root;

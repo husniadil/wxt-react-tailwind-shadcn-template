@@ -1,16 +1,12 @@
 import reactLogo from "@/assets/react.svg";
 import wxtLogo from "@/assets/wxt.svg";
-import { FloatingActionButton } from "@/components/floating-action-button";
-import { PopupPanel } from "@/components/popup-panel";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
 import { APP_NAME } from "@/constants";
-import { store } from "@/lib/storage";
 import "@/styles/globals.css";
-import { useEffect, useState } from "react";
-import { Trigger } from "@/types/trigger";
+import { useState } from "react";
 
-const Content = () => {
+export const App = () => {
   const [count, setCount] = useState(0);
 
   return (
@@ -71,32 +67,3 @@ const Content = () => {
     </Card>
   );
 };
-
-function App() {
-  const [isVisible, setIsVisible] = useState(false);
-  const [showFloatingButton, setShowFloatingButton] = useState(true);
-  useEffect(() => {
-    store.settings
-      .getValue()
-      .then((settings) => setShowFloatingButton(settings.showFloatingActionButton ?? true));
-    const unwatch = store.settings.watch((settings) =>
-      setShowFloatingButton(settings.showFloatingActionButton ?? true)
-    );
-    return () => unwatch();
-  }, []);
-
-  const toggleVisibility = () => {
-    setIsVisible((prev) => !prev);
-  };
-
-  return (
-    <>
-      {showFloatingButton && <FloatingActionButton onClick={toggleVisibility} />}
-      <PopupPanel isVisible={isVisible} onClose={toggleVisibility} trigger={Trigger.CONTENT}>
-        <Content />
-      </PopupPanel>
-    </>
-  );
-}
-
-export default App;

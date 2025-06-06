@@ -1,29 +1,23 @@
 import { useEffect, useState } from "react";
 import { Rnd, DraggableData, RndDragEvent, RndResizeCallback } from "react-rnd";
-import { CloseButton } from "@/components/close-button";
 import { store } from "@/lib/storage";
 import { cn } from "@/lib/utils";
 import { APP_NAME, POPUP_MIN_HEIGHT, POPUP_MIN_WIDTH } from "@/constants";
 import { Trigger } from "@/types/trigger";
 import { SettingsButton } from "./settings-button";
+import { SettingsPanel } from "@/components/settings-panel";
 import { Position } from "@/types/position";
 import { Dimensions } from "@/types/dimensions";
 
-interface PopupPanelProps {
+interface AppPanelProps {
   isVisible: boolean;
-  onClose?: () => void;
   children: React.ReactNode;
   trigger: Trigger;
   title?: string;
 }
 
-export function PopupPanel({
-  isVisible,
-  onClose,
-  children,
-  trigger,
-  title = APP_NAME,
-}: PopupPanelProps) {
+export function AppPanel({ isVisible, children, trigger, title = APP_NAME }: AppPanelProps) {
+  const [showSettings, setShowSettings] = useState(false);
   const [position, setPosition] = useState<Position>({ x: -POPUP_MIN_WIDTH, y: -POPUP_MIN_HEIGHT });
   const [dimensions, setDimensions] = useState<Dimensions>({
     width: POPUP_MIN_WIDTH,
@@ -61,18 +55,25 @@ export function PopupPanel({
     <div
       className={cn(
         isVisible ? "block" : "hidden",
-        "w-full h-full bg-background p-2 text-center flex flex-col rounded-sm relative border-2"
+        "w-full h-full bg-background p-2 text-center flex flex-col rounded-sm relative border-2 overflow-auto"
       )}
       style={{ minWidth: POPUP_MIN_WIDTH }}
     >
       <div className="panel-drag-handle cursor-move top-0 left-0 w-full flex items-center justify-between z-[9999] pb-2">
         <div className="pl-4 text-sm font-medium truncate text-primary">{title}</div>
         <div className="flex items-center gap-1">
-          <SettingsButton />
-          {onClose && <CloseButton onClick={onClose} />}
+          <SettingsButton isActive={showSettings} onClick={() => setShowSettings(!showSettings)} />
         </div>
       </div>
-      <div className="flex-1">{children}</div>
+      <div className="flex-1">
+        {showSettings ? (
+          <div className="w-full bg-background shadow-lg rounded-lg">
+            <SettingsPanel />
+          </div>
+        ) : (
+          children
+        )}
+      </div>
       <div className="pt-2 text-muted-foreground text-xs flex items-center justify-between w-full">
         <div className="flex items-center gap-1">
           Powered by{" "}

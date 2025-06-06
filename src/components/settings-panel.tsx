@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { ApiKeyField } from "@/components/settings/api-key-field";
-import { FloatingButtonField } from "@/components/settings/floating-button-field";
-import { FrameworkField } from "@/components/settings/framework-field";
 import { Loader2 } from "lucide-react";
+import { Settings } from "@/app/settings";
 
 export const SettingsPanel = () => {
   const [isSaving, setIsSaving] = useState(false);
@@ -24,9 +22,7 @@ export const SettingsPanel = () => {
         </div>
       </div>
       <div className="grid gap-2">
-        <ApiKeyField onSavingStateChange={handleSavingStateChange} />
-        <FloatingButtonField onSavingStateChange={handleSavingStateChange} />
-        <FrameworkField onSavingStateChange={handleSavingStateChange} />
+        <Settings handleSavingStateChange={handleSavingStateChange} />
       </div>
     </div>
   );
