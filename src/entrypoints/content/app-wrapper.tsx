@@ -2,7 +2,7 @@ import { FloatingActionButton } from "@/components/floating-action-button";
 import { AppPanel } from "@/components/app-panel";
 import { store } from "@/lib/storage";
 import "@/styles/globals.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Trigger } from "@/types/trigger";
 import { App } from "@/app/app";
 
@@ -18,6 +18,22 @@ function AppWrapper() {
     );
     return () => unwatch();
   }, []);
+
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === "Escape" && isVisible) {
+        toggleVisibility();
+      }
+    },
+    [isVisible]
+  );
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleKeyDown]);
 
   const toggleVisibility = () => {
     setIsVisible((prev) => !prev);
