@@ -16,13 +16,9 @@ A modern, opinionated template for building browser extensions with WXT, React, 
 
 ### Content UI
 
-<!-- Add content screenshot here -->
-
 ![Content UI](./screenshots/content.png)
 
 ### Popup UI
-
-<!-- Add popup screenshot here -->
 
 ![Popup UI](./screenshots/popup.png)
 
